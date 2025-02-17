@@ -13,3 +13,6 @@ class FileWriter:
         except Exception as e:
             print(f"Error writing to file: {e}")
 
+    def getFileName(self):
+        return self.filename
+
