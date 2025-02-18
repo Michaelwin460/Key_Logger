@@ -1,8 +1,10 @@
 import os
 import datetime
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 KEY = 5
