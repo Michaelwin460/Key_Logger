@@ -8,4 +8,5 @@ class Encryptor:
         return ''.join(chr(ord(c) ^ self.key) for c in data)
 
     def xor_decrypt(self, data: str) -> str:
+
         return ''.join(chr(ord(c) ^ self.key) for c in data)

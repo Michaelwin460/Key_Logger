@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0e3c11eb-35ac-4e8d-847f-7a391313eeb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_log_tool/Encryptor.py" beforeDir="false" afterPath="$PROJECT_DIR$/key_log_tool/Encryptor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/key_log_tool/KeyLoggerService.py" beforeDir="false" afterPath="$PROJECT_DIR$/key_log_tool/KeyLoggerService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_log_tool/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/key_log_tool/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_log_tool/Writer.py" beforeDir="false" afterPath="$PROJECT_DIR$/key_log_tool/Writer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_log_tool/keyLoggerManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/key_log_tool/keyLoggerManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_log_tool/log_from_outside.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/uploads/DESKTOP-A0ID66F/2025-02-18_21-05-40.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

