@@ -1,0 +1,4 @@
+body { background: black; color: #0f0; font-family: Arial, sans-serif; text-align: center; }
+.computer-list { list-style: none; padding: 0; }
+.computer-list li { margin: 10px 0; }
+a { color: #0f0; text-decoration: none; font-weight: bold; }
