@@ -1,6 +1,6 @@
 import os
 import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -9,6 +9,9 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 KEY = 5
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+users = {
+    "admin": "123"
+}
 
 
 def xor_decrypt(data):
@@ -44,6 +47,42 @@ def upload_file():
 def list_computers():
     computers = [d for d in os.listdir(UPLOAD_FOLDER) if os.path.isdir(os.path.join(UPLOAD_FOLDER, d))]
     return jsonify({"computers": computers})
+
+
+@app.route('/computers/<computerName>/logs', methods=['GET'])
+def get_computer_logs(computerName):
+    computer_folder = os.path.join(UPLOAD_FOLDER, computerName)
+
+    if not os.path.isdir(computer_folder):
+        return jsonify({"error": "Computer not found"}), 404
+
+    logs = [l for l in os.listdir(computer_folder) if os.path.isfile(os.path.join(computer_folder, l))]
+    # print(logs)
+    return jsonify({"computer": computerName, "logs": logs})
+
+
+@app.route('/computers/<computerName>/logs/<logFile>', methods=['GET'])
+def get_log_content(computerName, logFile):
+    computer_folder = os.path.join(UPLOAD_FOLDER, computerName)
+    log_path = os.path.join(computer_folder, logFile)
+
+    if not os.path.exists(log_path):
+        return jsonify({"error": "Log file not found"}), 404
+
+    return send_file(log_path, mimetype="text/plain")
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if username in users and users[username] == password:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False})
+
 
 
 if __name__ == '__main__':
