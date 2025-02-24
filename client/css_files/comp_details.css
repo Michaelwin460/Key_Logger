@@ -1,1 +1,47 @@
-body { background: black; color: #0f0; font-family: Arial, sans-serif; text-align: center; }
+body {
+    background: black;
+    color: #0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 2px solid #0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0f0;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px #0f0;
+}
+
+.logs-header {
+    font-size: 18px;
+    font-style: italic;
+    margin-bottom: 50px;
+}
+
+.logs-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.logs-list li {
+    background: rgba(0, 255, 0, 0.1);
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border-left: 20px solid #0f0;
+    border-right: 20px solid #0f0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 25px;
+    color: #0f0;
+}

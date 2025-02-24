@@ -1,5 +1,6 @@
 import os
 import datetime
+import sys
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
@@ -7,16 +8,12 @@ app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = "uploads"
-KEY = 5
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-users = {
-    "admin": "123"
-}
+users = {"admin": "123"}
 
 
 def xor_decrypt(data):
     return ''.join(chr(ord(c) ^ KEY) for c in data)
-
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -29,7 +26,7 @@ def upload_file():
     computer_folder = os.path.join(UPLOAD_FOLDER, hostname)
     os.makedirs(computer_folder, exist_ok=True)
 
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     file_path = os.path.join(computer_folder, f"{timestamp}.txt")
 
     if os.path.exists(file_path):
@@ -38,28 +35,21 @@ def upload_file():
     else:
         file.save(file_path)
 
-    print(jsonify({"message": "File received", "path": file_path}))
-
     return jsonify({"message": "File received", "path": file_path}), 200
-
 
 @app.route('/computers', methods=['GET'])
 def list_computers():
     computers = [d for d in os.listdir(UPLOAD_FOLDER) if os.path.isdir(os.path.join(UPLOAD_FOLDER, d))]
     return jsonify({"computers": computers})
 
-
 @app.route('/computers/<computerName>/logs', methods=['GET'])
 def get_computer_logs(computerName):
     computer_folder = os.path.join(UPLOAD_FOLDER, computerName)
-
     if not os.path.isdir(computer_folder):
         return jsonify({"error": "Computer not found"}), 404
 
     logs = [l for l in os.listdir(computer_folder) if os.path.isfile(os.path.join(computer_folder, l))]
-    # print(logs)
     return jsonify({"computer": computerName, "logs": logs})
-
 
 @app.route('/computers/<computerName>/logs/<logFile>', methods=['GET'])
 def get_log_content(computerName, logFile):
@@ -70,7 +60,6 @@ def get_log_content(computerName, logFile):
         return jsonify({"error": "Log file not found"}), 404
 
     return send_file(log_path, mimetype="text/plain")
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -83,8 +72,12 @@ def login():
     else:
         return jsonify({"success": False})
 
-
+def main(KEY_VALUE=5):
+    global KEY
+    KEY = int(KEY_VALUE) if isinstance(KEY_VALUE, str) and KEY_VALUE.isdigit() else 5
+    print(f'Server is listening on port 5000')
+    app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
-    print('server is listening on port 5000')
-    app.run(host='0.0.0.0', port=5000)
+    args = sys.argv[1:] if len(sys.argv) > 1 else []
+    main(*args)
