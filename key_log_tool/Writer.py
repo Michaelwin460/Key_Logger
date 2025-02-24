@@ -6,7 +6,7 @@ class FileWriter:
 
     def write_to_file(self, data):
         try:
-            with open(self.filename, "a+") as file:
+            with open(self.filename, "a") as file:
                 file.write(f"{data}\n")
                 file.flush()
         except Exception as e:
